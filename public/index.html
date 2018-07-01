@@ -1,0 +1,169 @@
+<!doctype html>
+
+<!-- ASSIGN OUR ANGULAR MODULE -->
+<html ng-app="flightSearch">
+
+<head>
+	<!-- META -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- Optimize mobile viewport -->
+
+	<title>Flight Search Engine</title>
+
+	<!-- SPELLS -->
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
+	<!-- load angular -->
+
+	<script src="js/controllers/main.js"></script>
+	<!-- load up our controller -->
+
+	<script src="js/core.js"></script>
+	<!-- load our main application -->
+	
+	<script src="js/services/todos.js"></script>
+	<!-- load our main application -->
+
+	<style>
+* {
+    box-sizing: border-box;
+}
+
+.column1 {
+    float: left;
+    width: 20%;
+    padding: 10px;
+    
+}
+.nopadmar{
+margin:0;
+padding:0;
+}
+.breadcrum{
+    width: 50%;
+	display:inline-block;
+}
+.dates{
+    width: 40%;
+	display:inline-block;
+	text-align:right;	
+}
+.breadcrumInfo{
+border-bottom: 1px solid green;
+}
+.column {
+    width: 80%;
+    float:left;
+	border-left: 1px solid green;
+}
+
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+.center {
+    margin: auto;
+    width: 70%;
+    border: 3px solid green;
+    
+}
+.info {
+width:70%;
+display: inline-block;
+padding-left: 10px;
+} 
+.infoimg{
+width: 28%;
+display: inline-block;
+padding:5px;
+}
+.flightElem{
+border: 1px solid green;
+    margin: 10px;
+}
+.infoimg img{
+
+    width: 100%;
+    height: auto;
+
+}
+.return , .going{
+display:inline-block;
+width:48%;
+	}
+input {
+    width: 100%;
+	padding: 3px;
+    margin: 3px;
+}
+@media only screen and (max-width: 720px) {
+    .column , .column1 {
+	    width:100%;
+		border-right:none;
+		border-bottom:1px solid green;
+	}
+}
+</style>
+
+
+
+</head>
+<!-- SET THE CONTROLLER -->
+
+<body ng-controller="mainController as ctrl">
+	<div class="row center">
+<div class="" style="border-bottom:1px solid green"><h2>Flight Search Engine</h2></div>
+  <div class="column1" >
+    <form>
+				<input type="text" name="originCity" ng-model="originCity" placeholder="Enter Origin City">
+				<input type="text" name="destinationCity" ng-model="destinationCity" placeholder="Enter Destination City">
+				<input type="date" ng-model="date" placeholder="Departure Date">
+				<input type="date" ng-model="date" placeholder="Departure Date">
+				<input type="number" min="1" ng-model="num" placeholder="passengers">
+			</form>
+  </div>
+  <div class="column">
+   <div class="breadcrumInfo"> 
+    
+	  <div class="breadcrum"> 
+	    <h2>{{ ctrl.origin }} > {{ctrl.destination}} > {{ctrl.origin}} </h2> 
+	  </div> 
+		<div class="dates">
+		 <h4 class="nopadmar">Depart: 1st June 2018</h4>
+		 <h4 class="nopadmar">Return: 1st June 2018</h4>
+		</div> 
+		
+	</div>
+    <div class="flightElem" ng-repeat= "flight in ctrl.flights[0].flights">
+	   
+	   <div class="info">
+	   <div class="price"><h2 class="nopadmar">Rs. {{ flight.price }}</h2></div>
+	   <div class="going">
+	     <span>{{ flight.f_name }}</span>
+		 <h3 class="nopadmar">{{ ctrl.labelArray[ctrl.origin]  }} > {{ ctrl.labelArray[ctrl.destination] }} </h3>
+		 <h4 class="nopadmar">Depart: {{ flight.depart_time }}</h4>
+		 <h4 class="nopadmar">Arrive: {{ flight.arrive_time }} </h4>
+	   </div>
+	   
+	   <div class="return">
+	     <span>{{ flight.f_name }}</span>
+		 <h3 class="nopadmar"> {{ ctrl.labelArray[ctrl.origin] }}  > {{ ctrl.labelArray[ctrl.destination] }}</h3>
+		 <h4 class="nopadmar">Depart: {{ flight.return_depart_time }} </h4>
+		 <h4 class="nopadmar">Arrive: {{ flight.return_arrive_time}} </h4>
+	   </div>
+	   
+	   
+	   </div>
+	   <div class="infoimg">
+	    <img src="download.jpg" >
+		<button style="text-align: center;width: 100%;">Book now</button>
+	   </div>
+	   
+	</div>
+  </div>
+</div>
+
+</body>
+
+</html>
