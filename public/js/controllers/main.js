@@ -19,5 +19,26 @@ angular.module('flightController', [])
 		   _this.destination = values.data.flightData[0].destination;
 		});
 
+		$scope.searchFlight = function (user) {
+			var availableFlights = [];
+			_.each( _this.flights, function (f) {
+				var orig = f.origin.toUpperCase();
+				var dest = f.destination.toUpperCase();
+				// console.log("dd",user.originCity.toUpperCase() ,orig, user.destinationCity.toUpperCase() ,dest);
+				if ((user.originCity.toUpperCase() == orig) && (user.destinationCity.toUpperCase() == dest)) {
+					_.each(f.flights, function (fl) {
+						console.log("dddemo",user.depdate ,fl.departure_date, user.retdate ,fl.return_date);
+						
+						if ((user.depdate == fl.departure_date) && (user.retdate == fl.return_date)) {
+							availableFlights.push(fl);
+						}
+					})
+				}
+			})
+			console.log("data", _this.flights);
+			_this.flights = [{"flights":availableFlights}];
+			console.log("data2", _this.flights);
+		}
+
 
 	}]);
