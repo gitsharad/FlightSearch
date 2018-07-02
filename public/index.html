@@ -33,9 +33,16 @@
 
 		.column1 {
 			float: left;
-			width: 20%;
+			width: 30%;
 			padding: 10px;
 
+		}
+		.waybtn{
+			margin: -5px;
+		}
+		.waybtn:disabled , .returnbtn:disabled{
+			font-weight: bold;
+			color:green;
 		}
 
 		.nopadmar {
@@ -59,7 +66,7 @@
 		}
 
 		.column {
-			width: 80%;
+			width: 70%;
 			float: left;
 			border-left: 1px solid green;
 		}
@@ -72,7 +79,7 @@
 
 		.center {
 			margin: auto;
-			width: 70%;
+			width: 80%;
 			border: 3px solid green;
 
 		}
@@ -108,9 +115,19 @@
 		}
 
 		input {
-			width: 100%;
+			width: 80%;
 			padding: 3px;
 			margin: 3px;
+			text-align: center
+		}
+		.priceSearch , 
+		.search 
+		{
+          border:1px solid gray;
+		  padding:5px;
+		  margin-top:10px;
+		  text-align: center;
+		  border-radius: 6px;
 		}
 
 		@media only screen and (max-width: 720px) {
@@ -133,34 +150,40 @@
 	<div class="" style="border-bottom:1px solid green"><h2>Flight Search Engine</h2></div>
 	  <div class="column1" >
 		<form>
+			<div class="search">
+			<button class="waybtn" ng-click="ctrl.waybtnDSB()" ng-disabled="ctrl.waybtn">OneWay</button>
+			<button class="returnbtn"  ng-click="ctrl.returnbtnDSB()"  ng-disabled="ctrl.returnbtn">Return</button>
 			<input type="text" name="originCity" ng-model="user.originCity" placeholder="Enter Origin City">
 			<input type="text" name="destinationCity" ng-model="user.destinationCity" placeholder="Enter Destination City">
 			<input type="date" ng-model="user.depdate" placeholder="Departure Date">
-			<input type="date" ng-model="user.retdate" placeholder="Return Date">
+			<input type="date" ng-model="user.retdate" placeholder="Return Date" ng-disabled="ctrl.waybtn">
 			<input type="number" min="1" ng-model="user.num" placeholder="passengers">
-			<input type="submit" value="Search" ng-click="searchFlight(user)">
-	
-			<pre>{{user| json}}</pre>
-			<pre>{{ctrl.user| json}}</pre>
-	
+			<input type="submit" value="Search" ng-click="searchFlight(user)">	
+			<input type="range" class="inputS" min="0" max="1000" value="50" ng-model="changedValue">
+			</div>
+			<div class="priceSearch">
+					 <h5 class="nopadmar">Refine flight search</h5>
+					0<input type="range" min="0" max="1000" value="50" ng-model="changedValue">10000 
+			
+			</div>
 		</form>
 	  </div>
 	  <div class="column">
-	   <div class="breadcrumInfo"> 
+	   <div class="breadcrumInfo" ng-if="ctrl.showHide"> 
 		
 		  <div class="breadcrum"> 
 			<h2>{{ ctrl.origin }} > {{ctrl.destination}} > {{ctrl.origin}} </h2> 
 		  </div> 
 			<div class="dates">
-			 <h4 class="nopadmar">Depart: 1st June 2018</h4>
-			 <h4 class="nopadmar">Return: 1st June 2018</h4>
+			 <h4 class="nopadmar">{{user.depdate}}</h4>
+			 <h4 class="nopadmar">{{user.retdate}}</h4>
 			</div> 
 			
 		</div>
 		<div class="flightElem" ng-repeat= "flight in ctrl.flights[0].flights">
 		   
 		   <div class="info">
-		   <div class="price"><h2 class="nopadmar">Rs. {{ flight.price }}</h2></div>
+		   <div class="price"><h2 class="nopadmar">{{ flight.price }}</h2></div>
 		   <div class="going">
 			 <span>{{ flight.f_name }}</span>
 			 <h3 class="nopadmar">{{ ctrl.labelArray[ctrl.origin]  }} > {{ ctrl.labelArray[ctrl.destination] }} </h3>
